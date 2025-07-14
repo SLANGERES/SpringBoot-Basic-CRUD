@@ -23,8 +23,8 @@ public class JournalService{
     public List<JournalEntries> getAll(){
         return JournalRepo.findAll();
     }
-    public JournalEntries getById(String id){
-        return JournalRepo.findById(id).orElse(null);
+    public Optional<JournalEntries> getById(String id){
+        return JournalRepo.findById(id);
 
     }
     public void deleteById(String id){
