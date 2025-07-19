@@ -2,12 +2,13 @@ package com.nautiyalkaran.Journal_App.services;
 
 
 import com.nautiyalkaran.Journal_App.Entity.JournalEntries;
+import com.nautiyalkaran.Journal_App.Entity.User;
 import com.nautiyalkaran.Journal_App.repository.JournalRepoInterface;
+import com.nautiyalkaran.Journal_App.repository.UserRepoInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -16,9 +17,21 @@ public class JournalService{
     @Autowired
     private JournalRepoInterface JournalRepo;
 
-    public void saveEntry(JournalEntries newJournalEntry){
-        JournalRepo.save(newJournalEntry);
+    @Autowired
+    private UserRepoInterface UserRepo;
+
+
+    public void saveEntry(JournalEntries newJournalEntry, String username) {
+        User user = UserRepo.findByusername(username);
+        if (user == null) {
+            throw new RuntimeException("User not found with username: " + username);
+        }
+
+        JournalEntries savedEntry = JournalRepo.save(newJournalEntry);
+        user.getJournal().add(savedEntry);
+        UserRepo.save(user);
     }
+
 
     public List<JournalEntries> getAll(){
         return JournalRepo.findAll();

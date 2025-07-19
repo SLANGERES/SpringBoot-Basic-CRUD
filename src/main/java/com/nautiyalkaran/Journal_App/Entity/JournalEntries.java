@@ -1,40 +1,21 @@
 package com.nautiyalkaran.Journal_App.Entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "journalEntries")
+@Data
+@NoArgsConstructor
 public class JournalEntries {
 
     @Id
     private String uid;
-
+    @NonNull
     private String title;
 
     private String Content;
-
-    public String getUid() {
-        return uid;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return Content;
-    }
-
-    public void setContent(String content) {
-        Content = content;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
 }
 
